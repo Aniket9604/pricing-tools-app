@@ -1,0 +1,18 @@
+<p>rate-card works!</p>
+
+<button (click)="viewDetails()" >
+    viewDetails
+</button>
+
+<button mat-raised-button (click)="logOut()" >
+    logout
+</button>
+
+<app-table 
+  [data]="userData"
+  [columns]="tableColumns"
+  (rowClick)="onRowSelected($event)">
+</app-table>
+
+<app-file-upload></app-file-upload>
+
