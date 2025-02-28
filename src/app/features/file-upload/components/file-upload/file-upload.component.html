@@ -1,3 +1,4 @@
 <input type="file" (change)="onFileSelected($event)">
 <button (click)="uploadFile()">Upload</button>
+
 <p *ngIf="uploadProgress">Upload Progress: {{ uploadProgress }}%</p>
