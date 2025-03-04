@@ -1,4 +1,15 @@
-<input type="file" (change)="onFileSelected($event)">
+<!-- <input type="file" (change)="onFileSelected($event)">
 <button (click)="uploadFile()">Upload</button>
+<p *ngIf="progress">Upload Progress: {{ progress }}%</p> -->
 
-<p *ngIf="uploadProgress">Upload Progress: {{ uploadProgress }}%</p>
+<input type="file" (change)="onFileSelected($event)" multiple>
+<button (click)="uploadFile()" [disabled]="isUploading">Upload</button>
+
+@if (isUploading) {
+  <p>Uploading... {{progress }}%</p>
+}
+
+@if (errorMessage) {
+  <p style="color: red;">{{errorMessage }}</p>
+}
+

@@ -12,26 +12,41 @@ import { CommonModule } from '@angular/common';
 })
 export class FileUploadComponent {
   selectedFile: File | null = null;
-  uploadProgress = 0;
 
-  constructor(private fileUploadService: FileUploadService) {}
+  
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
+  constructor(public fileUploadService: FileUploadService) {}
+
+ 
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
   }
 
-  uploadFile() {
+  uploadFile(): void {
     if (!this.selectedFile) {
-      alert('Please select a file first!');
+      this.fileUploadService.errorMessage.set('Please select a file first.');
       return;
     }
 
-    console.log('Uploading file:', this.selectedFile); 
-
-    this.fileUploadService.uploadFile(this.selectedFile).subscribe((event: any) => {
-      if (event.type === 1 && event.loaded && event.total) {
-        this.uploadProgress = Math.round((100 * event.loaded) / event.total);
-      }
-    });
+    this.fileUploadService.uploadFile(this.selectedFile);
   }
+
+  // Read signals from the service
+
+  get progress (): number {
+    return this.fileUploadService.progress();
+  }
+
+  get isUploading (): boolean {
+    return this.fileUploadService.isUploading();
+  }
+
+  get errorMessage (): string | null {
+    return this.fileUploadService.errorMessage();
+  }
+  
 }
